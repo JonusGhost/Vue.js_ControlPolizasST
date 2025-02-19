@@ -1,5 +1,5 @@
 <template>
-    <Clientes />
+    <Clientes/>
 </template>
 
 <script lang="ts" setup>
