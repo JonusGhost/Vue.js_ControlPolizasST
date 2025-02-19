@@ -88,7 +88,7 @@
         const token = response.data.token;
         localStorage.setItem("token", token); 
 
-        await router.push({ name: "/home" });
+        await router.push({ name: "/clientes" });
       } else {
         errorMessage.value = response.data.error;
       }
