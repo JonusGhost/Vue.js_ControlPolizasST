@@ -54,14 +54,22 @@ export default {
             drawer: false,
                 group: null,
                 items: [
-                    {
-                      title: 'Clientes',
-                      value: `/home`,
-                    },
-                    {
-                      title: 'Polizas',
-                      value: '/polizas',
-                    },
+              {
+                title: 'Clientes',
+                route: `/clientes`,
+              },
+              {
+                title: 'Nuevo Cliente',
+                route: '/home',
+              },
+              {
+                title: 'Polizas',
+                route: `/clientes`,
+              },
+              {
+                title: 'Nueva Poliza',
+                route: '/home_p',
+              },
             ],
             valid: false,
         };
@@ -70,6 +78,9 @@ export default {
         this.getClientes();
     },
     methods: {
+      navigateTo(route) {
+        this.$router.push(route);
+      },
         getClientes(){
             axios.get('clientes')
             .then(response => {

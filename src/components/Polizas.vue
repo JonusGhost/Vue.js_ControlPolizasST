@@ -68,11 +68,19 @@
             items: [
               {
                 title: 'Clientes',
-                value: `/home`,
+                route: `/clientes`,
+              },
+              {
+                title: 'Nuevo Cliente',
+                route: '/home',
               },
               {
                 title: 'Polizas',
-                value: '/polizas',
+                route: `/clientes`,
+              },
+              {
+                title: 'Nueva Poliza',
+                route: '/home_p',
               },
             ],
             valid: false,
@@ -83,34 +91,37 @@
         this.verificarRenovacion();
     },
     methods: {
-        getPolizas(){
-            axios.get('polizas')
-            .then(response => {
-                this.polizas = response.data;
-            })
-            .catch(error => console.error('Error al obtener polizas:', error));
-        },
-        verificarRenovacion() {
-          axios.get('poliza/verificar-renovacion')
-            .then(response => {
-              this.alertas = response.data.polizas.map(p => p.id);
-            })
-            .catch(error => console.error('Error al verificar renovación:', error));
-        },
-        editPoliza(id) {
-            this.$router.push(`/home_p/${id}`);
-        },
-        deletePoliza(id){
-            if(confirm('¿Seguro que deseas eliminar esta poliza?')){
-                axios.delete(`poliza/eliminar/${id}`)
-                .then(response => {
-                    if (response.data === 'Ok'){
-                        this.getPolizas();
-                    }
-                })
-                .catch(error => console.error('Error al eliminar poliza:', error))
-            }
-        }
+      navigateTo(route){
+        this.$router.push(route);
+      },
+      getPolizas(){
+          axios.get('polizas')
+          .then(response => {
+              this.polizas = response.data;
+          })
+          .catch(error => console.error('Error al obtener polizas:', error));
+      },
+      verificarRenovacion() {
+        axios.get('poliza/verificar-renovacion')
+          .then(response => {
+            this.alertas = response.data.polizas.map(p => p.id);
+          })
+          .catch(error => console.error('Error al verificar renovación:', error));
+      },
+      editPoliza(id) {
+          this.$router.push(`/home_p/${id}`);
+      },
+      deletePoliza(id){
+          if(confirm('¿Seguro que deseas eliminar esta poliza?')){
+              axios.delete(`poliza/eliminar/${id}`)
+              .then(response => {
+                  if (response.data === 'Ok'){
+                      this.getPolizas();
+                  }
+              })
+              .catch(error => console.error('Error al eliminar poliza:', error))
+          }
+      }
     }
   }
 </script>

@@ -52,14 +52,22 @@
         drawer: false,
         group: null,
         items: [
-          {
-            title: 'Clientes',
-            value: `/home`,
-          },
-          {
-            title: 'Polizas',
-            value: '/polizas',
-          },
+              {
+                title: 'Clientes',
+                route: `/clientes`,
+              },
+              {
+                title: 'Nuevo Cliente',
+                route: '/home',
+              },
+              {
+                title: 'Polizas',
+                route: `/clientes`,
+              },
+              {
+                title: 'Nueva Poliza',
+                route: '/home_p',
+              },
         ],
         valid: false,
         formData: {

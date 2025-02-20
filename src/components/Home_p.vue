@@ -29,7 +29,11 @@
                                       <v-text-field v-model="formData.fecha_inicio" label="Fecha inicio" type="date" required></v-text-field>
                                       <v-text-field v-model="formData.fecha_fin" label="Fecha fin" type="date" required></v-text-field>
                                       <v-text-field v-model="formData.precio" label="Precio" type="number"></v-text-field>
-                                      <v-text-field v-model="formData.id_cliente" label="Cliente" required></v-text-field>
+                                      <!--<v-text-field v-model="formData.id_cliente" label="Cliente" required></v-text-field>-->
+  
+                                      <v-select v-model="formData.id_cliente" :items="clientes" item-value="id" item-title="name" label="Cliente" required>
+                                      </v-select>
+
                                       <v-textarea v-model="formData.observaciones" label="Observaciones" type="text" required></v-textarea>
                                       <v-btn :disabled="!valid" color="primary" class="mt=4" @click="save">Guardar</v-btn>
                                   </v-form>
@@ -53,14 +57,22 @@ import axios from '../config/axios';
       drawer: false,
       group: null,
       items: [
-        {
-          title: 'Clientes',
-          value: `/home`,
-        },
-        {
-          title: 'Polizas',
-          value: '/polizas',
-        },
+              {
+                title: 'Clientes',
+                route: `/clientes`,
+              },
+              {
+                title: 'Nuevo Cliente',
+                route: '/home',
+              },
+              {
+                title: 'Polizas',
+                route: `/clientes`,
+              },
+              {
+                title: 'Nueva Poliza',
+                route: '/home_p',
+              },
       ],
       valid: false,
       formData: {
@@ -71,7 +83,11 @@ import axios from '../config/axios';
         id_cliente: '',
         observaciones: ''
       },
+      clientes: [],
     }),
+    mounted(){
+      this.fetchClientes();
+    },
 
     watch: {
       group() {
@@ -103,18 +119,22 @@ import axios from '../config/axios';
         },
         loadPoliza(id){
           axios.get(`poliza/${id}`)
-          .then(responce => {
-            this.formData = { ...responce.data};
+          .then(response => {
+            this.formData = { ...response.data};
           })
           .catch(error => console.error('Error al obtener polzia:', error))
         },
-        fetchOptions(){
+        fetchClientes(){
             axios.get('nombre')
-            .then(responce => {
-                this.options = responce.data;
+            .then(response => {
+                this.clientes = response.data.map(cliente => ({
+                  id: cliente.id,
+                  name:cliente.name
+                }));
+                console.log('Clientes despues de asignar:', JSON.stringify(this.clientes, null,2));
             })
             .catch(error => console.error('Error al cargar opciones:', error))
         }
-    }
-  }
+    },
+  };
 </script>
